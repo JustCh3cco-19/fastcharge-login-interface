@@ -4,31 +4,33 @@ from email.mime.multipart import MIMEMultipart
 import os
 import time
 from dotenv import load_dotenv
+from datetime import date
 
 # Carica la password per l'app Google, altrimenti non funziona il codice e non viene inviata la mail
 load_dotenv()
 
 # Configurazione del file di log e timer
-LOG_FILE_PATH = "accessi.txt"  # Percorso del file di log
-EMAIL_INTERVAL = 15 * 60  # 15 minuti in secondi
+LOG_FILE_PATH = "resources/log/accessi.txt"  # Percorso del file di log
+EMAIL_INTERVAL = 1 * 60  # 15 minuti in secondi
 MAX_FILE_SIZE = 1024  # Dimensione massima del file di log in byte prima dell'invio dell'email
 
 def invia_email(data):
     """
     Invia un'email con i dati del file di log.
     """
-    sender_email = "sender_email@example.com"
-    receiver_email = "receiver_email@example.com"
+    sender_email = os.getenv("SENDER_EMAIL")
+    receiver_email = os.getenv("RECEIVER_EMAIL")
     password = os.getenv("EMAIL_APP_PASSWORD")
 
     # Crea l'oggetto MIMEMultipart
     message = MIMEMultipart("alternative")
-    message["Subject"] = "Accessi al sistema"
+    today = date.today().strftime("%d/%m/%Y")
+    message["Subject"] = f"Accessi {today}"
     message["From"] = sender_email
     message["To"] = receiver_email
 
     # Corpo dell'email
-    text = f"Accessi al sistema\n\n{data}"
+    text = f"{data}"
     part1 = MIMEText(text, "plain")
     message.attach(part1)
 
@@ -44,7 +46,7 @@ def invia_email(data):
 
     except Exception as e:
         print(f"Errore durante l'invio dell'email: {e}")
-    
+
     finally:
         server.quit()
 
@@ -80,4 +82,6 @@ def monitor_log():
         time.sleep(5)
 
 if __name__ == "__main__":
+    print("MONITOR ACCESSI ONLINE")
+    
     monitor_log()
