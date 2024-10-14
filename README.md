@@ -5,4 +5,5 @@ This Python script sends an email with a log of users who log into the system ev
 First, you have to create an app on your personal Google Account, and then create an .env file for storing the **EMAIL_APP_PASSWORD**, **SENDER_EMAIL** and **RECEIVER_EMAIL** env variable.
 
 ## Interface
-![Interfaccia](resources/images/interfaccia.png)
+![Menu Principale](resources/images/menuprincipale.png)
+![Registrati](resources/images/registrati.png)
