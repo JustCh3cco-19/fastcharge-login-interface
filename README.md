@@ -1,4 +1,4 @@
-# send-access
+# FastCharge Login Dashboard
 Send an email with a log of users who log into the system every 15 minutes, but only if the accessi.txt file contains data.
 
 ## Google Accounts Method
