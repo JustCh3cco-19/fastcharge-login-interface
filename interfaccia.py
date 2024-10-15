@@ -1,10 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
 from PIL import Image, ImageTk
-import qrcode
+from generaqrcode import genera_qr_code
 
 BACKGROUND_LOGO = "resources/images/fast_charge_logo.png"
-QR_CODE_DIR = "resources/qr_codes"
 
 def center_window(window):
     window.update_idletasks()
@@ -14,21 +13,7 @@ def center_window(window):
     y = (window.winfo_screenheight() // 2) - (height // 2)
     window.geometry(f'{width}x{height}+{x}+{y}')
 
-def genera_qr_code(nome, cognome, email):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr_data = f"{nome} {cognome} - {email}"
-    qr.add_data(qr_data)
-    qr.make(fit=True)
-    
-    img = qr.make_image(fill='black', back_color='white')
-    return img
-
-def registra_accesso():
+def registra_utente():
     nome = entry_nome.get()
     cognome = entry_cognome.get()
     email = entry_email.get()
@@ -62,6 +47,7 @@ def registra_accesso():
         torna_al_menu_principale()
     else:
         messagebox.showwarning("Errore", "Compila tutti i campi.")
+
 
 def show_registration_form():
     nascondi_menu_principale()
@@ -98,6 +84,7 @@ def mostra_menu_principale():
     btn_accedi.place(x=540, y=380)
     author_label.place(x=20, y=680)  # Place author label
 
+# Configurazione dell'interfaccia grafica
 root = tk.Tk()
 root.title("FastCharge")
 root.geometry("1280x720")
@@ -122,6 +109,7 @@ style_button_fg = '#000000'
 
 root.configure(bg=style_bg)
 
+# Definizione dei widget
 label_nome = tk.Label(root, text="Nome:", font=style_font, bg=style_bg, fg=style_fg)
 entry_nome = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_font)
 label_cognome = tk.Label(root, text="Cognome:", font=style_font, bg=style_bg, fg=style_fg)
@@ -129,14 +117,17 @@ entry_cognome = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_
 label_email = tk.Label(root, text="Email:", font=style_font, bg=style_bg, fg=style_fg)
 entry_email = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_font)
 
-btn_submit = tk.Button(root, text="Conferma Registrazione", command=registra_accesso, font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
+btn_submit = tk.Button(root, text="Conferma Registrazione", 
+                       command=registra_utente, 
+                       font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
 
 btn_registrati = tk.Button(root, text="Registrati", command=show_registration_form, font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
 btn_accedi = tk.Button(root, text="Accedi", command=accedi, font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
 
-# Add author label
+# Aggiungi author label
 author_label = tk.Label(root, text="Made by Francesco Zompanti", font=('Helvetica', 14), fg=style_fg, bg=style_bg)
 
+# Mostra il menu principale
 mostra_menu_principale()
 
 if __name__ == "__main__":
