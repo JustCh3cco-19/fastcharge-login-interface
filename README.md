@@ -2,7 +2,10 @@
 This Python script sends an email with a log of users who log into the system every 15 minutes, but only if the accessi.txt file contains data.
 
 ## Google Accounts Method
-First, you have to create an app on your personal Google Account, and then create an .env file for storing the **EMAIL_APP_PASSWORD**, **SENDER_EMAIL** and **RECEIVER_EMAIL** env variable.
+First, you have to create an app on your personal Google Account, and then create an .env file for storing the **EMAIL_APP_PASSWORD**, **SENDER_EMAIL** and **RECEIVER_EMAIL** variables.
+
+## Aruba Accounts Method
+Create a .env file with **SENDER_EMAIL**, **SENDER_PASSWORD**, **RECEIVER_EMAIL** variables and comment with **#** the Google Accounts method into **monitoraccessi.py** and uncomment Aruba method (they're defined in invia_email function)
 
 ## Interface
 ![Menu Principale](resources/images/menuprincipale.png)
