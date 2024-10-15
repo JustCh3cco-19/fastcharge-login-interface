@@ -1,0 +1,5 @@
+opencv-python
+python-dotenv
+tk
+pyzbar
+Pillow
