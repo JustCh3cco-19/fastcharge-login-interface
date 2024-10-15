@@ -6,6 +6,9 @@ from generaqrcode import genera_qr_code
 BACKGROUND_LOGO = "resources/images/fast_charge_logo.png"
 
 def center_window(window):
+    """
+    Posiziona l'interfaccia al centro dello schermo
+    """
     window.update_idletasks()
     width = window.winfo_width()
     height = window.winfo_height()
@@ -14,6 +17,9 @@ def center_window(window):
     window.geometry(f'{width}x{height}+{x}+{y}')
 
 def registra_utente():
+    """
+    Interfaccia di registrazione utente e mostra il QR code associato ad esso
+    """
     nome = entry_nome.get()
     cognome = entry_cognome.get()
     email = entry_email.get()
@@ -32,12 +38,12 @@ def registra_utente():
         qr_label.image = qr_photo
         qr_label.pack(padx=20, pady=20)
         
-        msg_label1 = tk.Label(qr_window, text="Salva sul tuo telefono questo QR Code per accedere al sistema.", 
+        msg_label1 = tk.Label(qr_window, text="Salva sul tuo telefono questo QR Code per accedere", 
                               font=('Helvetica', 14), wraplength=350)
         msg_label1.pack(pady=10)
         
         close_button = tk.Button(qr_window, text="Chiudi", command=qr_window.destroy, 
-                                 font=('Helvetica', 14), bg=style_button_bg, fg=style_button_fg)
+                                 font=('Helvetica', 14), bg=STYLE_BUTTON_BG, fg=STYLE_BUTTON_FG)
         close_button.pack(pady=20)
         
         entry_nome.delete(0, tk.END)
@@ -50,6 +56,9 @@ def registra_utente():
 
 
 def show_registration_form():
+    """
+    Mostra l'interfaccia di registrazione utente
+    """
     nascondi_menu_principale()
     
     label_nome.place(x=440, y=260)
@@ -62,6 +71,9 @@ def show_registration_form():
     author_label.place(x=20, y=680)  # Place author label
 
 def torna_al_menu_principale():
+    """
+    Torna al menù principale dopo aver completato delle azioni
+    """
     label_nome.place_forget()
     entry_nome.place_forget()
     label_cognome.place_forget()
@@ -73,13 +85,22 @@ def torna_al_menu_principale():
     mostra_menu_principale()
 
 def accedi():
+    """
+    Interfaccia di accesso al sistema
+    """
     messagebox.showinfo("Accesso", "Funzionalità di accesso non implementata.")
 
 def nascondi_menu_principale():
+    """
+    Nasconde il menù principale in sottosezioni
+    """
     btn_registrati.place_forget()
     btn_accedi.place_forget()
 
 def mostra_menu_principale():
+    """
+    Mostra il menù principale
+    """
     btn_registrati.place(x=540, y=300)
     btn_accedi.place(x=540, y=380)
     author_label.place(x=20, y=680)  # Place author label
@@ -99,33 +120,38 @@ canvas = tk.Canvas(root, width=1280, height=720)
 canvas.pack(fill="both", expand=True)
 canvas.create_image(640, 360, image=background_photo, anchor="center")
 
-style_font = ('Helvetica', 16, 'bold')
-style_bg = '#000000'
-style_fg = '#FFA500'
-style_entry_bg = '#2E2E2E'
-style_entry_fg = '#FFFFFF'
-style_button_bg = '#FFA500'
-style_button_fg = '#000000'
+STYLE_FONT = ('Helvetica', 16, 'bold')
+STYLE_BG = '#000000'
+STYLE_FG = '#FFA500'
+STYLE_ENTRY_BG = '#2E2E2E'
+STYLE_ENTRY_FG = '#FFFFFF'
+STYLE_BUTTON_BG = '#FFA500'
+STYLE_BUTTON_FG = '#000000'
 
-root.configure(bg=style_bg)
+root.configure(bg=STYLE_BG)
 
 # Definizione dei widget
-label_nome = tk.Label(root, text="Nome:", font=style_font, bg=style_bg, fg=style_fg)
-entry_nome = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_font)
-label_cognome = tk.Label(root, text="Cognome:", font=style_font, bg=style_bg, fg=style_fg)
-entry_cognome = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_font)
-label_email = tk.Label(root, text="Email:", font=style_font, bg=style_bg, fg=style_fg)
-entry_email = tk.Entry(root, bg=style_entry_bg, fg=style_entry_fg, font=style_font)
+label_nome = tk.Label(root, text="Nome:", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
+entry_nome = tk.Entry(root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
+
+label_cognome = tk.Label(root, text="Cognome:", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
+entry_cognome = tk.Entry(root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
+
+label_email = tk.Label(root, text="Email:", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
+entry_email = tk.Entry(root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
 
 btn_submit = tk.Button(root, text="Conferma Registrazione", 
                        command=registra_utente, 
-                       font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
+                       font=STYLE_FONT, bg=STYLE_BUTTON_BG, fg=STYLE_BUTTON_FG, width=20)
 
-btn_registrati = tk.Button(root, text="Registrati", command=show_registration_form, font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
-btn_accedi = tk.Button(root, text="Accedi", command=accedi, font=style_font, bg=style_button_bg, fg=style_button_fg, width=20)
+btn_registrati = tk.Button(root, text="Registrati", command=show_registration_form, 
+                           font=STYLE_FONT, bg=STYLE_BUTTON_BG, fg=STYLE_BUTTON_FG, width=20)
+btn_accedi = tk.Button(root, text="Accedi", command=accedi, 
+                       font=STYLE_FONT, bg=STYLE_BUTTON_BG, fg=STYLE_BUTTON_FG, width=20)
 
 # Aggiungi author label
-author_label = tk.Label(root, text="Made by Francesco Zompanti", font=('Helvetica', 14), fg=style_fg, bg=style_bg)
+author_label = tk.Label(root, text="Made by Francesco Zompanti", 
+                        font=('Helvetica', 14), fg=STYLE_FG, bg=STYLE_BG)
 
 # Mostra il menu principale
 mostra_menu_principale()

@@ -4,6 +4,9 @@ import os
 QR_CODE_DIR = "resources/qr_codes"
 
 def genera_qr_code(nome, cognome, email, save_path=None):
+    """
+    Genera un QR code in fase di registrazione utente
+    """
     qr = qrcode.QRCode(
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
@@ -22,7 +25,7 @@ def genera_qr_code(nome, cognome, email, save_path=None):
             os.makedirs(QR_CODE_DIR)
         
         # Crea il nome del file QR code con nome, cognome e email
-        file_name = f"{nome}_{cognome}.png"
+        file_name = f"{email}.png"
         full_path = os.path.join(QR_CODE_DIR, file_name)
         
         # Salva l'immagine come file PNG
