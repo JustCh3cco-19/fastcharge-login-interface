@@ -1,10 +1,10 @@
+from datetime import date
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 import time
 from dotenv import load_dotenv
-from datetime import date
 
 # Carica la password per l'app Google, altrimenti non funziona il codice e non viene inviata la mail
 load_dotenv()
@@ -52,7 +52,8 @@ def invia_email(data):
 
 def monitor_log():
     """
-    Monitora il file di log e invia un'email ogni 15 minuti o quando il file raggiunge la dimensione massima.
+    Monitora il file di log e invia un'email ogni 15 minuti 
+    o quando il file raggiunge la dimensione massima.
     """
     last_email_time = time.time()
 
@@ -83,5 +84,4 @@ def monitor_log():
 
 if __name__ == "__main__":
     print("MONITOR ACCESSI ONLINE")
-    
     monitor_log()
