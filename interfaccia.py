@@ -55,7 +55,7 @@ class FastChargeInterface:
         email = self.entry_email.get()
 
         if nome and cognome and email:
-            qr_img = genera_qr_code(nome, cognome, email)
+            qr_img = genera_qr_code(nome, cognome, email, save_path=True)
             qr_img = qr_img.resize((300, 300))
             qr_photo = ImageTk.PhotoImage(qr_img)
             

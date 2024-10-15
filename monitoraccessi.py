@@ -94,5 +94,4 @@ def monitor_log():
         time.sleep(5)
 
 if __name__ == "__main__":
-    print("MONITOR ACCESSI ONLINE")
     monitor_log()

@@ -11,4 +11,5 @@ def main():
     run_interface()
 
 if __name__ == "__main__":
+    print("FastCharge Online")
     main()
