@@ -1,6 +1,6 @@
 # FastCharge Login Interface
-This Python script sends an email with a log of users who log into the system every 15 minutes, but only if the accessi.txt file contains data. 
-In order to run the system, install the requirements with **pip install -r requirements.txt** and the library for Linux with **sudo apt install libzbar0** and launch the system with **python3 main.py**
+This Python script sends an email with users who log into the system every 15 minutes, but only if the accessi.txt file contains data.
+In order to run the system, first install the requirements with **pip install -r requirements.txt** and the library for Linux with **sudo apt install libzbar0** and launch the system with **python3 main.py**
 
 
 ## Google Accounts Method
