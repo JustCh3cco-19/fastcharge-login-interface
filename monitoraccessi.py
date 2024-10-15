@@ -11,7 +11,7 @@ load_dotenv()
 
 # Configurazione del file di log e timer
 LOG_FILE_PATH = "resources/log/accessi.txt"  # Percorso del file di log
-EMAIL_INTERVAL = 15 * 60  # 15 minuti in secondi
+EMAIL_INTERVAL = 1 * 60  # 15 minuti in secondi
 MAX_FILE_SIZE = 1024  # Dimensione massima del file di log in byte prima dell'invio dell'email
 
 def invia_email(data):
