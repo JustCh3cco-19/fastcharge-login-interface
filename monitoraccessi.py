@@ -25,7 +25,7 @@ def invia_email(data):
     # Crea l'oggetto MIMEMultipart
     message = MIMEMultipart("alternative")
     today = date.today().strftime("%d/%m/%Y")
-    message["Subject"] = f"Accessi {today}"
+    message["Subject"] = f"Accessi FastCharge {today}"
     message["From"] = sender_email
     message["To"] = receiver_email
 
