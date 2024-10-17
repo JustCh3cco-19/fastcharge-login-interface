@@ -116,7 +116,7 @@ class FastChargeInterface:
 
 			# Scrittura dei dati nel file
 			with open(log_file_path, "a", encoding='utf-8') as file:
-				file.write(f"{nome_cognome} - {email},\nMotivazione visita: {motivazione_visita}\n")
+				file.write(f"{nome_cognome}\n{email}\nMotivazione visita: {motivazione_visita}\n\n")
 
 			# Genera e mostra il QR Code (resto del codice invariato)
 			qr_img = genera_qr_code(nome_cognome, email, save_path=True)

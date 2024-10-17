@@ -18,7 +18,7 @@ def genera_qr_code(nome_cognome, email, save_path=None):
         box_size=10,
         border=4,
     )
-    qr_data = f"{nome_cognome} - {email}"
+    qr_data = f"{nome_cognome}\n{email}"
     qr.add_data(qr_data)
     qr.make(fit=True)
 
