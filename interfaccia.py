@@ -1,3 +1,8 @@
+"""
+Module Name: interfaccia
+Description: This module creates the dashboard in order to make the login or the signup
+Author: Francesco Zompanti
+"""
 import os
 import sys
 import tkinter as tk
@@ -6,7 +11,10 @@ from PIL import Image, ImageTk
 import cv2
 from pyzbar.pyzbar import decode
 from generaqrcode import genera_qr_code
-from styles import STYLE_FONT, STYLE_BG, STYLE_FG, STYLE_ENTRY_BG, STYLE_ENTRY_FG, STYLE_BUTTON_BG, STYLE_BUTTON_FG, STYLE_CREDITS_BG, STYLE_CREDITS_FG
+from styles import (
+	STYLE_FONT, STYLE_BG, STYLE_FG, STYLE_ENTRY_BG, STYLE_ENTRY_FG,
+	STYLE_BUTTON_BG, STYLE_BUTTON_FG, STYLE_CREDITS_BG, STYLE_CREDITS_FG
+)
 from utils import center_window
 
 def resource_path(relative_path):
@@ -26,7 +34,7 @@ class FastChargeInterface:
 	"""
 	def __init__(self, root):
 		self.root = root
-		self.root.title("FastCharge")
+		self.root.title("Accessi FCE")
 		self.root.geometry("1280x720")
 		self.root.resizable(False, False)
 
@@ -56,17 +64,21 @@ class FastChargeInterface:
 		self.canvas.create_image(640, 360, image=self.background_photo, anchor="center")
 
 	def setup_widgets(self):
-		self.label_nome_cognome = tk.Label(self.root, text="Nome e Cognome", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
-		self.entry_nome_cognome = tk.Entry(self.root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
-
-		#self.label_cognome = tk.Label(self.root, text="Cognome", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
-		#self.entry_cognome = tk.Entry(self.root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
+		"""
+		Crea i vari widgets usati in fase di registrazione ed accesso al sistema
+		"""
+		self.label_nome_cognome = tk.Label(self.root, text="Nome e Cognome",
+									 font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
+		self.entry_nome_cognome = tk.Entry(self.root, bg=STYLE_ENTRY_BG,
+									 fg=STYLE_ENTRY_FG, font=STYLE_FONT)
 
 		self.label_email = tk.Label(self.root, text="Email", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
 		self.entry_email = tk.Entry(self.root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
 
-		self.label_motivazione_visita = tk.Label(self.root, text="Motivazione Visita", font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
-		self.entry_motivazione_visita = tk.Entry(self.root, bg=STYLE_ENTRY_BG, fg=STYLE_ENTRY_FG, font=STYLE_FONT)
+		self.label_motivazione_visita = tk.Label(self.root, text="Motivazione Visita",
+										   font=STYLE_FONT, bg=STYLE_BG, fg=STYLE_FG)
+		self.entry_motivazione_visita = tk.Entry(self.root, bg=STYLE_ENTRY_BG,
+										   fg=STYLE_ENTRY_FG, font=STYLE_FONT)
 
 		self.btn_submit = tk.Button(self.root, text="Conferma Registrazione",
 							   command=self.registra_utente,
@@ -86,26 +98,28 @@ class FastChargeInterface:
 								font=STYLE_FONT, fg=STYLE_CREDITS_FG, bg=STYLE_CREDITS_BG)
 
 	def registra_utente(self):
-		nome = self.entry_nome.get()
-		cognome = self.entry_cognome.get()
+		"""
+		Funzione che implementa la registrazione dell'utente
+		"""
+		nome_cognome = self.entry_nome_cognome.get()
 		email = self.entry_email.get()
 		motivazione_visita = self.entry_motivazione_visita.get()
 
-		if nome and cognome and email:
+		if nome_cognome and email:
 			# Usa resource_path per ottenere il percorso corretto
-			LOG_FILE_PATH = os.path.join(os.getcwd(), "resources", "log", "accessi.txt")
+			log_file_path = os.path.join(os.getcwd(), "resources", "log", "accessi.txt")
 
 			# Creazione automatica della cartella se non esiste
-			os.makedirs(os.path.dirname(LOG_FILE_PATH), exist_ok=True)
+			os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
 
-			print("Log Accessi al percorso: ", LOG_FILE_PATH)
+			print("Log Accessi al percorso: ", log_file_path)
 
 			# Scrittura dei dati nel file
-			with open(LOG_FILE_PATH, "a", encoding='utf-8') as file:
-				file.write(f"{nome} {cognome} - {email},\nMotivazione visita: {motivazione_visita}\n")
+			with open(log_file_path, "a", encoding='utf-8') as file:
+				file.write(f"{nome_cognome} - {email},\nMotivazione visita: {motivazione_visita}\n")
 
 			# Genera e mostra il QR Code (resto del codice invariato)
-			qr_img = genera_qr_code(nome, cognome, email, save_path=True)
+			qr_img = genera_qr_code(nome_cognome, email, save_path=True)
 			qr_img = qr_img.resize((300, 300))
 			qr_photo = ImageTk.PhotoImage(qr_img)
 
@@ -118,11 +132,15 @@ class FastChargeInterface:
 			qr_label.image = qr_photo
 			qr_label.pack(padx=20, pady=20)
 
-			msg_label1 = tk.Label(qr_window, text="Accesso effettuato, salva il QR Code per i futuri accessi.",
-								  font=('Helvetica', 14), wraplength=350)
+			msg_label1 = tk.Label(
+				qr_window,
+				text="Accesso effettuato, salva il QR Code per i futuri accessi.",
+				font=('Helvetica', 14),
+				wraplength=350
+			)
 			msg_label1.pack(pady=10)
 
-			close_button = tk.Button(qr_window, text="Chiudi", command=qr_window.destroy, 
+			close_button = tk.Button(qr_window, text="Chiudi", command=qr_window.destroy,
 									 font=('Helvetica', 14), bg=STYLE_BUTTON_BG, fg=STYLE_BUTTON_FG)
 			close_button.pack(pady=20)
 
@@ -147,7 +165,7 @@ class FastChargeInterface:
 		#self.entry_cognome.delete(0, tk.END)
 		self.entry_email.delete(0, tk.END)
 		self.entry_motivazione_visita.delete(0, tk.END)
-		
+
 		self.label_nome_cognome.place(x=440, y=260)
 		self.entry_nome_cognome.place(x=640, y=260, width=300)
 		# self.label_cognome.place(x=440, y=320)
@@ -198,7 +216,7 @@ class FastChargeInterface:
 				return False
 			return False
 
-		LOG_FILE_PATH = "resources/log/accessi.txt"
+		log_file_path = "resources/log/accessi.txt"
 
 		cap = cv2.VideoCapture(0)
 		if not cap.isOpened():
@@ -213,10 +231,10 @@ class FastChargeInterface:
 
 			contenuto_qr = leggi_qr_code(frame)
 			if contenuto_qr:
-				if contenuto_presente_nel_file(contenuto_qr, LOG_FILE_PATH):
+				if contenuto_presente_nel_file(contenuto_qr, log_file_path):
 					messagebox.showinfo("Accesso", "Accesso gia' effettuato!")
 				else:
-					with open(LOG_FILE_PATH, "a", encoding='utf-8') as file:
+					with open(log_file_path, "a", encoding='utf-8') as file:
 						file.write(contenuto_qr + "\n")
 					messagebox.showinfo("Accesso", "Accesso effettuato!")
 				break

@@ -1,3 +1,9 @@
+"""
+Module Name: monitoraccessi
+Description: This module checks if accessi.txt file contains data 
+            and it sends to the RECEIVER_EMAIL address.
+Author: Francesco Zompanti
+"""
 from datetime import date
 import smtplib
 from email.mime.text import MIMEText
@@ -22,7 +28,7 @@ def invia_email(data):
     sender_email = os.getenv("SENDER_EMAIL")
     receiver_email = os.getenv("RECEIVER_EMAIL")
     password = os.getenv("EMAIL_APP_PASSWORD")
-    
+
     # Metodo Aruba (togliere hashtag per utilizzare Aruba)
     # sender_email = os.getenv("SENDER_EMAIL")
     # receiver_email = os.getenv("RECEIVER_EMAIL")
@@ -55,7 +61,7 @@ def invia_email(data):
         server.sendmail(sender_email, receiver_email, message.as_string())
         print(f"Email inviata con successo all'indirizzo {receiver_email}!")
 
-    except Exception as e:
+    except (smtplib.SMTPException, ConnectionError) as e:
         print(f"Errore durante l'invio dell'email: {e}")
 
     finally:
@@ -75,16 +81,17 @@ def monitor_log():
         # Controlla se il file di log esiste e contiene dati
         if os.path.exists(LOG_FILE_PATH) and os.path.getsize(LOG_FILE_PATH) > 0:
             # Se il file supera la dimensione massima o sono passati 15 minuti, invia un'email
-            if os.path.getsize(LOG_FILE_PATH) >= MAX_FILE_SIZE or time_since_last_email >= EMAIL_INTERVAL:
+            if (os.path.getsize(LOG_FILE_PATH) >= MAX_FILE_SIZE or
+                time_since_last_email >= EMAIL_INTERVAL):
                 # Leggi i dati dal file di log
-                with open(LOG_FILE_PATH, "r") as file:
+                with open(LOG_FILE_PATH, "r", encoding='utf-8') as file:
                     log_data = file.read()
 
                 # Invia l'email con i dati accumulati
                 invia_email(log_data)
 
                 # Svuota il file di log dopo l'invio
-                with open(LOG_FILE_PATH, "w") as file:
+                with open(LOG_FILE_PATH, "w", encoding='utf-8') as file:
                     file.write("")
 
                 # Aggiorna il tempo dell'ultimo invio email
