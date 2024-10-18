@@ -1,20 +1,20 @@
 #!/bin/bash
 
 # Nome dell'environment che vuoi attivare
-ENV_NAME="FastCharge"
+# ENV_NAME="FastCharge"
 SYSTEM_NAME="Accessi FCE"
-BUILD_FOLDER="build/"
-BUILD_FILE="AccessiFCE.spec"
-EXECUTABLE_FOLDER="dist/"
-EXECUTABLE_NAME="dist/AccessiFCE"
+BUILD_FOLDER="../build/"
+BUILD_FILE="../AccessiFCE.spec"
+EXECUTABLE_FOLDER="../dist/"
+EXECUTABLE_NAME="../dist/AccessiFCE"
 
 # Controlla se l'environment è attivo
-if [ "$CONDA_DEFAULT_ENV" != "$ENV_NAME" ]; then
-    echo "Activating $ENV_NAME environment."
-    conda activate $ENV_NAME
-else
-    echo "$ENV_NAME environment is already active."
-fi
+# if [ "$CONDA_DEFAULT_ENV" != "$ENV_NAME" ]; then
+#     echo "Activating $ENV_NAME environment."
+#     conda activate $ENV_NAME
+# else
+#     echo "$ENV_NAME environment is already active."
+# fi
 
 echo "Starting build for $SYSTEM_NAME"
 

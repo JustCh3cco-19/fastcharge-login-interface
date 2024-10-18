@@ -30,7 +30,7 @@ jobs:
         pyinstaller --onefile --add-data "resources:resources" --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
 
     - name: Upload eseguibile
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: AccessiFCEWindows
         path: dist/AccessiFCE.exe
