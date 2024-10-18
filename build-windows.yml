@@ -1,0 +1,36 @@
+name: Build Eseguibile Windows
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+
+    - name: Installazione dipendenze
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller  # Aggiungi altre dipendenze se necessario
+
+    - name: Build eseguibile
+      run: |
+        pyinstaller --onefile --add-data "resources:resources" --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
+
+    - name: Upload eseguibile
+      uses: actions/upload-artifact@v2
+      with:
+        name: MyExecutable
+        path: dist/AccessiFCE.exe
