@@ -1,4 +1,4 @@
-name: Build Eseguibile Windows
+name: Build Eseguibile Linux
 
 on:
   push:
@@ -8,22 +8,22 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Setup Python
+    - name: Set up Python
       uses: actions/setup-python@v2
       with:
-        python-version: '3.12'
+        python-version: '3.12'  # Sostituisci con la versione di Python necessaria
 
     - name: Installazione dipendenze
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-        pip install pyinstaller  # Aggiungi altre dipendenze se necessario
+        pip install pyinstaller
 
     - name: Build eseguibile
       run: |
@@ -32,5 +32,5 @@ jobs:
     - name: Upload eseguibile
       uses: actions/upload-artifact@v2
       with:
-        name: MyExecutable
-        path: dist/AccessiFCE.exe
+        name: AccessiFCELinux
+        path: dist/AccessiFCE  # Sostituisci con il percorso corretto dell'eseguibile
