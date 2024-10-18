@@ -7,14 +7,16 @@ import os
 import sys
 import tkinter as tk
 from tkinter import messagebox, ttk
+from tkinter import font as tkfont
 from PIL import Image, ImageTk
 import cv2
 from pyzbar.pyzbar import decode
 from generaqrcode import genera_qr_code
 from styles import (
     STYLE_BG, STYLE_FG, STYLE_ENTRY_BG, STYLE_ENTRY_FG,
-    STYLE_BUTTON_BG, STYLE_BUTTON_FG, STYLE_CREDITS_BG, STYLE_CREDITS_FG
+    STYLE_BUTTON_BG, STYLE_BUTTON_FG, STYLE_CREDITS_BG, STYLE_CREDITS_FG, get_font
 )
+
 from utils import center_window
 
 def resource_path(relative_path):
@@ -115,17 +117,15 @@ class FastChargeInterface:
         """
         Crea i vari widgets usati in fase di registrazione ed accesso al sistema
         """
-        # Creare un frame centrale più grande
         self.main_frame = tk.Frame(self.root, bg=STYLE_BG, width=800, height=600)
 
         self.credits_frame = tk.Frame(self.root, bg=STYLE_CREDITS_BG)
         self.credits_frame.place(relx=0.00, rely=0.99, anchor="sw")
         
-        # Font più grandi per una risoluzione maggiore
-        large_font = ('Helvetica', 24, 'bold')
-        entry_font = ('Helvetica', 20)
+        # Usare il font FiraSans per tutto
+        large_font = get_font(24, "bold")
+        entry_font = get_font(20)
         
-        # Configurazione delle etichette e campi di input con dimensioni maggiori
         self.label_nome_cognome = tk.Label(self.main_frame, text="Nome e Cognome",
                                      font=large_font, bg=STYLE_BG, fg=STYLE_FG)
         self.entry_nome_cognome = RoundedEntry(self.main_frame, 
@@ -150,7 +150,7 @@ class FastChargeInterface:
                                               font=entry_font, 
                                               width=40)
 
-        # Bottoni più grandi
+        # Bottoni più grandi con il font FiraSans
         self.btn_submit = RoundedButton(self.main_frame, 
                                     text="Conferma Registrazione",
                                     command=self.registra_utente,
@@ -183,15 +183,15 @@ class FastChargeInterface:
                                     fg=STYLE_BUTTON_FG, 
                                     width=25)
 
-        # Credits con font più grande e posizione aggiornata
+        # Credits con il font FiraSans
         self.author_label = tk.Label(
             self.credits_frame, 
             text="Credits: Francesco Zompanti",
-            font=('Helvetica', 20, 'bold'),  # Font in grassetto per maggiore visibilità
+            font=get_font(20, "bold"),  # Font FiraSans in grassetto
             fg=STYLE_CREDITS_FG, 
             bg=STYLE_CREDITS_BG,
-            padx=10,  # Aggiunto padding orizzontale
-            pady=5    # Aggiunto padding verticale
+            padx=10,  
+            pady=5    
         )
         self.author_label.pack()
 
@@ -203,19 +203,19 @@ class FastChargeInterface:
         self.entry_email.delete(0, tk.END)
         self.entry_motivazione_visita.delete(0, tk.END)
 
-        # Posizionare il frame principale al centro
-        self.main_frame.place(relx=0.5, rely=0.5, anchor="center")
+        # Posizionare il frame principale più in basso
+        self.main_frame.place(relx=0.5, rely=0.6, anchor="center")
 
         # Disporre i widget verticalmente con spaziatura maggiore
         self.label_nome_cognome.pack(pady=10)
         self.entry_nome_cognome.pack(pady=(0, 25))
-        
+    
         self.label_email.pack(pady=10)
         self.entry_email.pack(pady=(0, 25))
-        
+    
         self.label_motivazione_visita.pack(pady=10)
         self.entry_motivazione_visita.pack(pady=(0, 25))
-        
+    
         self.btn_submit.pack(pady=20)
         self.btn_back.pack(pady=10)
 
