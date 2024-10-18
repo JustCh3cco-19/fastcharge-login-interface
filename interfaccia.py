@@ -176,7 +176,7 @@ class FastChargeInterface:
                                         width=25)
 
         self.btn_accedi = RoundedButton(self.main_frame, 
-                                    text="Accedi", 
+                                    text="Scansiona", 
                                     command=self.accedi,
                                     font=large_font, 
                                     bg=STYLE_BUTTON_BG, 
