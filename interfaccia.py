@@ -253,7 +253,8 @@ class FastChargeInterface:
             os.makedirs(os.path.dirname(log_file_path), exist_ok=True)
 
             with open(log_file_path, "a", encoding='utf-8') as file:
-                file.write(f"{nome_cognome}\n{email}\nMotivazione visita: {motivazione_visita}\n\n")
+                file.write(f"{nome_cognome}\n{email}\nMotivazione Visita: {motivazione_visita}\n")
+                print(f"{nome_cognome}\n{email}\nMotivazione Visita: {motivazione_visita}")
 
             qr_img = genera_qr_code(nome_cognome, email, save_path=True)
             qr_img = qr_img.resize((400, 400))  # QR code più grande
@@ -329,9 +330,9 @@ class FastChargeInterface:
             # Label per la motivazione
             label_motivazione = tk.Label(
                 frame, 
-                text="Inserisci la motivazione della visita:",
-                font=('Helvetica', 20, 'bold'), 
-                bg=STYLE_BG, 
+                text="Motivazione visita",
+                font=('Helvetica', 20, 'bold'),
+                bg=STYLE_BG,
                 fg=STYLE_FG
             )
             label_motivazione.pack(pady=20)
@@ -364,6 +365,7 @@ class FastChargeInterface:
                 else:
                     with open(log_file_path, "a", encoding='utf-8') as file:
                         file.write(f"{qr_data}\nMotivazione visita: {motivazione}\n\n")
+                        print(f"{qr_data}\nMotivazione visita: {motivazione}")
                     messagebox.showinfo("Accesso", "Accesso effettuato con successo!")
                 
                 motivazione_window.destroy()

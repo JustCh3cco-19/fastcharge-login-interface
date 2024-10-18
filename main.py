@@ -19,5 +19,5 @@ def main():
     run_interface()
 
 if __name__ == "__main__":
-    print("Accessi FCE Online")
+    print("Accessi Effettuati:")
     main()
