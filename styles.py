@@ -2,7 +2,6 @@
 """
 Font and colors applied into interfaccia.py
 """
-STYLE_FONT = ('Helvetica', 16, 'bold')
 STYLE_BG = '#f4f4f4'
 STYLE_FG = '#000000'
 STYLE_ENTRY_BG = '#e0d7d8'

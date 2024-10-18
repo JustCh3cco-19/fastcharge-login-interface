@@ -12,7 +12,7 @@ import cv2
 from pyzbar.pyzbar import decode
 from generaqrcode import genera_qr_code
 from styles import (
-    STYLE_FONT, STYLE_BG, STYLE_FG, STYLE_ENTRY_BG, STYLE_ENTRY_FG,
+    STYLE_BG, STYLE_FG, STYLE_ENTRY_BG, STYLE_ENTRY_FG,
     STYLE_BUTTON_BG, STYLE_BUTTON_FG, STYLE_CREDITS_BG, STYLE_CREDITS_FG
 )
 from utils import center_window
