@@ -27,7 +27,7 @@ jobs:
 
     - name: Build eseguibile
       run: |
-        pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/libiconv.dll;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" src/main.py
+        pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/libiconv.dll;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
 
     - name: Upload eseguibile
       uses: actions/upload-artifact@v3
