@@ -12,4 +12,4 @@ Create a .env file with **SENDER_EMAIL**, **SENDER_PASSWORD**, **RECEIVER_EMAIL*
 ## Interface
 ![Menu Principale](resources/images/menuprincipale.png)
 ![Registrati](resources/images/registrati.png)
-![Motivazione Visita Login](resources/images/motivazionevisitalogin.png)
+![Motivazione Visita Login](resources/images/motivazionelogin.png)
