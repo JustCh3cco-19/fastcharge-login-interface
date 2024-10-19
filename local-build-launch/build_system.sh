@@ -21,7 +21,7 @@ cd ..
 echo "Starting build for $SYSTEM_NAME"
 
 # Esegui pyinstaller e controlla se ha successo
-if pyinstaller --onefile --add-data "resources:resources" --hidden-import="PIL._tkinter_finder" --name "$EXECUTABLE_NAME" main.py; then
+if pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/linux/libzbar.so.0;." --add-binary "resources/libs/linux/libzbar.so.0.3.0;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py; then
     # Controlla se l'eseguibile è stato creato
     if [ -f "$EXECUTABLE_FOLDER/$EXECUTABLE_NAME" ]; then
         # Sposta l'eseguibile fuori dalla cartella src

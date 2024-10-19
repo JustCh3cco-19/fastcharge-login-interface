@@ -11,26 +11,26 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.12'
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.12"
 
-    - name: Installazione dipendenze
-      run: |
-        python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install pyinstaller
+      - name: Installazione dipendenze
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pyinstaller
 
-    - name: Build eseguibile
-      run: |
-        pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/libiconv.dll;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
+      - name: Build eseguibile
+        run: |
+          pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/windows/libiconv.dll;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
 
-    - name: Upload eseguibile
-      uses: actions/upload-artifact@v3
-      with:
-        name: AccessiFCEWindows
-        path: dist/AccessiFCE.exe
+      - name: Upload eseguibile
+        uses: actions/upload-artifact@v3
+        with:
+          name: AccessiFCEWindows
+          path: dist/AccessiFCE.exe
