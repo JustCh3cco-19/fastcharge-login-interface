@@ -26,6 +26,10 @@ jobs:
           pip install pyinstaller
 
       - name: Build eseguibile
+        env:
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
+          RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
         run: |
           pyinstaller --onefile --collect-all pyzbar --collect-all PIL --add-data "resources:resources" --add-binary "resources/libs/windows/libiconv.dll;." --hidden-import="PIL._tkinter_finder" --name "AccessiFCE" main.py
 
