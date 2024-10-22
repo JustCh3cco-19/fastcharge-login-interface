@@ -25,14 +25,14 @@ def invia_email(data):
     Invia un'email con i dati del file di log.
     """
     # Metodo Account Google (commentare per non utilizzare questo metodo)
-    sender_email = os.getenv("SENDER_EMAIL")
-    receiver_email = os.getenv("RECEIVER_EMAIL")
-    password = os.getenv("EMAIL_APP_PASSWORD")
+    #sender_email = os.getenv("SENDER_EMAIL")
+    #receiver_email = os.getenv("RECEIVER_EMAIL")
+    #password = os.getenv("EMAIL_APP_PASSWORD")
 
     # Metodo Aruba (togliere hashtag per utilizzare Aruba)
-    # sender_email = os.getenv("SENDER_EMAIL")
-    # receiver_email = os.getenv("RECEIVER_EMAIL")
-    # password = os.getenv("SENDER_PASSWORD")
+    sender_email = os.getenv("SENDER_EMAIL")
+    receiver_email = os.getenv("RECEIVER_EMAIL")
+    password = os.getenv("SENDER_PASSWORD")
 
     # Crea l'oggetto MIMEMultipart
     message = MIMEMultipart("alternative")
@@ -48,14 +48,14 @@ def invia_email(data):
 
     try:
         # Connessione al server SMTP di Gmail (commentare per non utilizzare questo metodo)
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.starttls()
-        server.login(sender_email, password)
-
-        # Connessione al server SMTP di Aruba (togliere hashtag per utilizzare Aruba)
-        # server = smtplib.SMTP("smtps.aruba.it", 465)
+        # server = smtplib.SMTP("smtp.gmail.com", 587)
         # server.starttls()
         # server.login(sender_email, password)
+
+        # Connessione al server SMTP di Aruba (togliere hashtag per utilizzare Aruba e sostituire nomedominio ed estensione)
+        server = smtplib.SMTP("smtp.nomedominio.estensione", 465)
+        server.starttls()
+        server.login(sender_email, password)
 
         # Invio dell'email (unico)
         server.sendmail(sender_email, receiver_email, message.as_string())
