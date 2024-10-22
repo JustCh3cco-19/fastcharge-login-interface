@@ -10,10 +10,10 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
 import time
-#from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 # Carica la password per l'app Google, altrimenti non funziona il codice e non viene inviata la mail
-#load_dotenv()
+load_dotenv()
 
 # Configurazione del file di log e timer
 LOG_FILE_PATH = "resources/log/accessi.txt"  # Percorso del file di log
