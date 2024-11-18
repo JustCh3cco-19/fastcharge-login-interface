@@ -9,11 +9,24 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import os
+import sys
 import time
 from dotenv import load_dotenv
 
-# Carica la password per l'app Google, altrimenti non funziona il codice e non viene inviata la mail
-load_dotenv()
+def resource_path(relative_path):
+    """Ottiene il percorso assoluto del file, sia per PyInstaller che per lo script."""
+    try:
+        # Percorso quando viene eseguito come bundle PyInstaller
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # Percorso quando viene eseguito come script Python
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
+# Carica il file .env usando il percorso corretto
+dotenv_path = resource_path(".env")
+load_dotenv(dotenv_path=dotenv_path)
 
 # Configurazione del file di log e timer
 LOG_FILE_PATH = "resources/log/accessi.txt"  # Percorso del file di log
@@ -25,21 +38,23 @@ def invia_email(data):
     Invia un'email con i dati del file di log.
     """
     # Metodo Account Google (commentare per non utilizzare questo metodo)
-    #sender_email = os.getenv("SENDER_EMAIL")
-    #receiver_email = os.getenv("RECEIVER_EMAIL")
-    #password = os.getenv("EMAIL_APP_PASSWORD")
-
-    # Metodo Aruba (togliere hashtag per utilizzare Aruba)
     sender_email = os.getenv("SENDER_EMAIL")
-    receiver_email = os.getenv("RECEIVER_EMAIL")
+    receiver_emails = os.getenv("RECEIVER_EMAIL")
     password = os.getenv("SENDER_PASSWORD")
+
+    # Verifica che le variabili d'ambiente siano valide
+    if not sender_email or not receiver_emails or not password:
+        raise EnvironmentError("Le credenziali email non sono configurate correttamente. Verifica il file .env.")
+
+    # Divide gli indirizzi email separati da virgole in una lista
+    receiver_emails = [email.strip() for email in receiver_emails.split(",")]
 
     # Crea l'oggetto MIMEMultipart
     message = MIMEMultipart("alternative")
     today = date.today().strftime("%d/%m/%Y")
     message["Subject"] = f"Accessi FastCharge {today}"
     message["From"] = sender_email
-    message["To"] = receiver_email
+    message["To"] = ", ".join(receiver_emails)
 
     # Corpo dell'email
     text = f"{data}"
@@ -47,19 +62,18 @@ def invia_email(data):
     message.attach(part1)
 
     try:
-        # Connessione al server SMTP di Gmail (commentare per non utilizzare questo metodo)
+        # Connessione al server SMTP
         # server = smtplib.SMTP("smtp.gmail.com", 587)
         # server.starttls()
         # server.login(sender_email, password)
-
-        # Connessione al server SMTP di Aruba (togliere hashtag per utilizzare Aruba e sostituire nomedominio ed estensione)
-        server = smtplib.SMTP("smtp.nomedominio.estensione", 465)
+        
+        server = smtplib.SMTP("smtp.fceitalia.it", 587)
         server.starttls()
         server.login(sender_email, password)
 
-        # Invio dell'email (unico)
-        server.sendmail(sender_email, receiver_email, message.as_string())
-        print(f"Email inviata con successo all'indirizzo {receiver_email}!")
+        # Invio dell'email
+        server.sendmail(sender_email, receiver_emails, message.as_string())
+        print(f"Email inviata con successo agli indirizzi {', '.join(receiver_emails)}!")
 
     except (smtplib.SMTPException, ConnectionError) as e:
         print(f"Errore durante l'invio dell'email: {e}")
@@ -73,7 +87,6 @@ def monitor_log():
     o quando il file raggiunge la dimensione massima.
     """
     last_email_time = time.time()
-
     while True:
         current_time = time.time()
         time_since_last_email = current_time - last_email_time
@@ -98,7 +111,7 @@ def monitor_log():
                 last_email_time = current_time
 
         # Attendi prima di ricontrollare
-        time.sleep(5)
+        time.sleep(1)
 
 if __name__ == "__main__":
     monitor_log()
