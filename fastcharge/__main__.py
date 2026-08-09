@@ -1,4 +1,4 @@
-"""Entry point compatibile per avviare FastCharge dalla repository."""
+"""Permette l'avvio con ``python -m fastcharge``."""
 
 from fastcharge.application import main
 

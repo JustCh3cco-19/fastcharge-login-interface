@@ -3,12 +3,11 @@ Module Name: generaqrcode
 Description: This module generates and saves the qrcode associated to the user
 Author: Francesco Zompanti
 """
-import os
 import qrcode
+from fastcharge.paths import qr_code_dir
 
-QR_CODE_DIR = "resources/qr_codes"
 
-def genera_qr_code(nome_cognome, email, save_path=None):
+def genera_qr_code(qr_data, file_id, save_path=None):
     """
     Genera un QR code in fase di registrazione utente
     """
@@ -18,7 +17,6 @@ def genera_qr_code(nome_cognome, email, save_path=None):
         box_size=10,
         border=4,
     )
-    qr_data = f"{nome_cognome}\n{email}"
     qr.add_data(qr_data)
     qr.make(fit=True)
 
@@ -26,12 +24,12 @@ def genera_qr_code(nome_cognome, email, save_path=None):
 
     if save_path:
         # Verifica che la cartella esista, altrimenti la crea
-        if not os.path.exists(QR_CODE_DIR):
-            os.makedirs(QR_CODE_DIR)
+        output_dir = qr_code_dir()
+        output_dir.mkdir(parents=True, exist_ok=True)
 
-        # Crea il nome del file QR code con nome, cognome e email
-        file_name = f"{email}.png"
-        full_path = os.path.join(QR_CODE_DIR, file_name)
+        # L'identificatore opaco evita nomi file contenenti dati personali.
+        file_name = f"{file_id}.png"
+        full_path = output_dir / file_name
 
         # Salva l'immagine come file PNG
         img.save(full_path)

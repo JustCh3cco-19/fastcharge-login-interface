@@ -1,4 +1,4 @@
-# utils.py
+"""Utility per il posizionamento delle finestre Tk."""
 
 def center_window(window):
     """

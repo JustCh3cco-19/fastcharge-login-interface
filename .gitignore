@@ -49,6 +49,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+.ruff_cache/
 cover/
 
 # Translations
@@ -163,4 +164,10 @@ cython_debug/
 .txt
 *.jpeg
 AccessiFCE
+*.db
+*.db-shm
+*.db-wal
+*.pending
+*.migrated
+resources/qr-signing.key
 fira-sans/
